@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>商品比價追蹤儀表板</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang TC", "Microsoft JhengHei", sans-serif;
+    background: #f4f5f7;
+    margin: 0;
+    padding: 24px;
+    color: #222;
+  }
+  h1 { font-size: 22px; margin-bottom: 4px; }
+  .updated { color: #888; font-size: 13px; margin-bottom: 24px; }
+  .product-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  .product-title { font-size: 18px; font-weight: 600; margin-bottom: 12px; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+  th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #eee; font-size: 14px; }
+  th { color: #666; font-weight: 500; }
+  tr.lowest { background: #eafaf0; }
+  .badge {
+    display: inline-block;
+    background: #16a34a;
+    color: #fff;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-left: 6px;
+  }
+  .price { font-weight: 600; font-size: 15px; }
+  .orig-price { color: #aaa; text-decoration: line-through; font-size: 12px; margin-left: 6px; }
+  .seller-type-official { color: #2563eb; font-size: 12px; }
+  .seller-type-third { color: #b45309; font-size: 12px; }
+  a.buy-link {
+    display: inline-block;
+    background: #111;
+    color: #fff;
+    text-decoration: none;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+  }
+  .error-row { color: #dc2626; font-size: 13px; }
+  canvas { max-height: 280px; }
+  .empty { color: #999; padding: 40px; text-align: center; }
+</style>
+</head>
+<body>
+  <h1>商品比價追蹤儀表板</h1>
+  <div class="updated">最後更新：2026-07-23 23:39</div>
+  
+<div class="product-card">
+  <div class="product-title">iPhone Air MagSafe 電池 A3385</div>
+  <table>
+    <tr><th>平台</th><th>賣家</th><th>價格</th><th>上次更新</th><th></th></tr>
+    <tr>
+      <td>momo</td>
+      <td>Wildboar3C <span class="seller-type-third">(第三方)</span></td>
+      <td><span class="price">$2,690</span><span class="orig-price">$3,290</span></td>
+      <td>2026-07-23 23:39</td>
+      <td><a class="buy-link" href="https://www.momoshop.com.tw/TP/TP0004833/goodsDetail/TP00048330000127" target="_blank">前往購買</a></td>
+    </tr>
+<tr>
+      <td>PChome</td>
+      <td>Apple旗艦館 <span class="seller-type-official">(官方)</span></td>
+      <td><span class="price">$2,999</span><span class="orig-price">$3,290</span></td>
+      <td>2026-07-23 20:28</td>
+      <td><a class="buy-link" href="https://24h.pchome.com.tw/prod/DYAJD2-1900JLFBQ" target="_blank">前往購買</a></td>
+    </tr>
+<tr class="lowest">
+      <td>酷澎 Coupang</td>
+      <td>Apple (官方直營) <span class="seller-type-official">(官方)</span></td>
+      <td><span class="price">$2,590</span><span class="badge">最低價</span></td>
+      <td>2026-07-23 23:39</td>
+      <td><a class="buy-link" href="https://www.tw.coupang.com/products/600586047176707?itemId=600586047094788&vendorItemId=600586047094786" target="_blank">前往購買</a></td>
+    </tr>
+  </table>
+  <canvas id="chart-0"></canvas>
+</div>
+
+  <script>
+    const trackingData = [{"商品名稱": "iPhone Air MagSafe 電池 A3385", "追蹤清單": [{"平台": "momo", "賣家": "Wildboar3C", "賣家類型": "第三方", "連結": "https://www.momoshop.com.tw/TP/TP0004833/goodsDetail/TP00048330000127", "目前價格": 2690, "原價": 3290, "上次抓取時間": "2026-07-23 23:39", "歷史價格": [{"時間": "2026-07-23 21:10", "價格": 2690}, {"時間": "2026-07-23 20:32", "價格": 2690}, {"時間": "2026-07-23 20:33", "價格": 2690}, {"時間": "2026-07-23 20:36", "價格": 2690}, {"時間": "2026-07-23 20:39", "價格": 2690}, {"時間": "2026-07-23 22:00", "價格": 2690}, {"時間": "2026-07-23 23:28", "價格": 2690}, {"時間": "2026-07-23 23:35", "價格": 2690}, {"時間": "2026-07-23 23:39", "價格": 2690}]}, {"平台": "PChome", "賣家": "Apple旗艦館", "賣家類型": "官方", "連結": "https://24h.pchome.com.tw/prod/DYAJD2-1900JLFBQ", "暫停": true, "目前價格": 2999, "原價": 3290, "上次抓取時間": "2026-07-23 20:28", "歷史價格": [{"時間": "2026-07-23 21:10", "價格": 2999}, {"時間": "2026-07-23 20:28", "價格": 2999}]}, {"平台": "酷澎 Coupang", "賣家": "Apple (官方直營)", "賣家類型": "官方", "連結": "https://www.tw.coupang.com/products/600586047176707?itemId=600586047094788&vendorItemId=600586047094786", "目前價格": 2590, "原價": null, "上次抓取時間": "2026-07-23 23:39", "歷史價格": [{"時間": "2026-07-23 21:10", "價格": 2690}, {"時間": "2026-07-23 23:39", "價格": 2590}]}]}];
+    trackingData.forEach((product, idx) => {
+      const canvasId = "chart-" + idx;
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+
+      const datasets = product["追蹤清單"].map((entry, i) => {
+        const colors = ["#2563eb", "#16a34a", "#dc2626", "#9333ea", "#ea580c"];
+        const history = entry["歷史價格"] || [];
+        return {
+          label: entry["平台"],
+          data: history.map(h => ({ x: h["時間"], y: h["價格"] })),
+          borderColor: colors[i % colors.length],
+          backgroundColor: "transparent",
+          tension: 0.2,
+        };
+      });
+
+      new Chart(canvas, {
+        type: "line",
+        data: { datasets },
+        options: {
+          responsive: true,
+          scales: {
+            x: { type: "category", title: { display: true, text: "時間" } },
+            y: { title: { display: true, text: "價格 (NT$)" } }
+          },
+          plugins: { legend: { position: "bottom" } }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
